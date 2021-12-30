@@ -19,6 +19,7 @@ import binusmaya.binus.ac.id.fmanews.Models.NewsHeadlines;
 
 public class MainActivity extends AppCompatActivity implements SelectListener, View.OnClickListener{
     // Ini buat testing ya
+    // oke testing
 
     RecyclerView recyclerView;
     CustomAdapter adapter;
