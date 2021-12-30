@@ -18,6 +18,8 @@ import binusmaya.binus.ac.id.fmanews.Models.NewsApiResponse;
 import binusmaya.binus.ac.id.fmanews.Models.NewsHeadlines;
 
 public class MainActivity extends AppCompatActivity implements SelectListener, View.OnClickListener{
+    // Ini buat testing ya
+
     RecyclerView recyclerView;
     CustomAdapter adapter;
     ProgressDialog dialog;
