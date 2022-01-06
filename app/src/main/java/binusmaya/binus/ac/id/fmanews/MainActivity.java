@@ -18,13 +18,11 @@ import binusmaya.binus.ac.id.fmanews.Models.NewsApiResponse;
 import binusmaya.binus.ac.id.fmanews.Models.NewsHeadlines;
 
 public class MainActivity extends AppCompatActivity implements SelectListener, View.OnClickListener{
-    // Ini buat testing ya
-    // oke testing
 
     RecyclerView recyclerView;
     CustomAdapter adapter;
     ProgressDialog dialog;
-    Button b1,b2,b3,b4,b5,b6,b7;
+    Button b1,b2,b3,b4,b5,b6,b7, btnLogin;
     SearchView searchView;
 
     @Override
@@ -68,6 +66,16 @@ public class MainActivity extends AppCompatActivity implements SelectListener, V
         b6.setOnClickListener(this);
         b7 = findViewById(R.id.btn_7);
         b7.setOnClickListener(this);
+
+        btnLogin = findViewById(R.id.btnLogin);
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, Login.class);
+                startActivity(intent);
+
+            }
+        });
 
         RequestManager manager = new RequestManager(this);
         manager.getNewsHeadlines(listener, "general", null);
