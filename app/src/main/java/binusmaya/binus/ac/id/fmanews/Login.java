@@ -43,6 +43,13 @@ public class Login extends AppCompatActivity {
                 silentSignInByHwId();
             }
         });
+
+        findViewById(R.id.HuaweiIdSignOutButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signOut();
+            }
+        });
     }
 
     private void silentSignInByHwId() {
@@ -114,5 +121,20 @@ public class Login extends AppCompatActivity {
                 Log.e(TAG, "sign in failed : " +((ApiException)authAccountTask.getException()).getStatusCode());
             }
         }
+    }
+
+    private void signOut() {
+        Task<Void> signOutTask = mAuthService.signOut();
+        signOutTask.addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.i(TAG, "signOut Success");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(Exception e) {
+                Log.i(TAG, "signOut fail");
+            }
+        });
     }
 }

@@ -103,7 +103,8 @@
             app:defaultQueryHint="Search News..."
             android:iconifiedByDefault="false"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize">
+            android:layout_height="?attr/actionBarSize"
+            android:focusable="false">
 
         </SearchView>
     </androidx.cardview.widget.CardView>
