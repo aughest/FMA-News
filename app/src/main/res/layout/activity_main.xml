@@ -1,130 +1,208 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:hwads="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <com.huawei.hms.ads.banner.BannerView
-        android:id="@+id/hw_banner_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        hwads:adId="testw6vs28auh3"
-        hwads:bannerSize="BANNER_SIZE_360_57"/>
+    <!--    BOTTOM NAVBAR-->
 
-    <Button
-        android:id="@+id/btnLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Login"/>
-
-    <HorizontalScrollView
-        android:layout_margin="6dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <Button
-                android:id="@+id/btn_1"
-                android:text="business"
-                android:textSize="12sp"
-                android:padding="6dp"
-                android:layout_margin="6dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/nav_background_curved"
+            app:itemBackground="@drawable/nav_background_curved"
+            app:itemIconTint="@drawable/selector"
+            app:itemTextColor="@drawable/selector"
+            app:menu="@menu/menu_navigation" />
 
-            </Button>
-            <Button
-                android:id="@+id/btn_2"
-                android:text="entertainment"
-                android:textSize="12sp"
-                android:padding="6dp"
-                android:layout_margin="6dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+    <!--    BOTTOM NAVBAR-->
 
-            </Button>
-            <Button
-                android:id="@+id/btn_3"
-                android:text="general"
-                android:textSize="12sp"
-                android:padding="6dp"
-                android:layout_margin="6dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-            </Button>
-            <Button
-                android:id="@+id/btn_4"
-                android:text="health"
-                android:textSize="12sp"
-                android:padding="6dp"
-                android:layout_margin="6dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-            </Button>
-            <Button
-                android:id="@+id/btn_5"
-                android:text="science"
-                android:textSize="12sp"
-                android:padding="6dp"
-                android:layout_margin="6dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-            </Button>
-            <Button
-                android:id="@+id/btn_6"
-                android:text="sports"
-                android:textSize="12sp"
-                android:padding="6dp"
-                android:layout_margin="6dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-            </Button>
-            <Button
-                android:id="@+id/btn_7"
-                android:text="technology"
-                android:textSize="12sp"
-                android:padding="6dp"
-                android:layout_margin="6dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-            </Button>
-        </LinearLayout>
-    </HorizontalScrollView>
-
-    <androidx.cardview.widget.CardView
-        android:layout_margin="14dp"
-        app:cardElevation="8dp"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <SearchView
-            android:id="@+id/search_view"
-            app:defaultQueryHint="Search News..."
-            android:iconifiedByDefault="false"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:focusable="false">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="12dp"
+            android:gravity="center">
 
-        </SearchView>
-    </androidx.cardview.widget.CardView>
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="367px"
+                android:layout_height="195px"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/fma_logo">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_main"
-        android:layout_margin="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+            </ImageView>
 
-    </androidx.recyclerview.widget.RecyclerView>
+            <!--        <Button-->
+            <!--            android:id="@+id/btnLogin"-->
+            <!--            android:layout_width="wrap_content"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:layout_alignParentRight="true"-->
+            <!--            android:layout_centerInParent="true"-->
+            <!--            android:backgroundTint="#5240D5"-->
+            <!--            android:text="Login" />-->
 
-</LinearLayout>
+        </RelativeLayout>
+
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:id="@+id/btn_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_margin="6dp"
+                    android:backgroundTint="#5B4DBE"
+                    android:text="Business"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15dp"
+                    android:visibility="visible">
+
+                </Button>
+
+                <Button
+                    android:id="@+id/btn_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_margin="6dp"
+                    android:backgroundTint="#5B4DBE"
+                    android:text="Entertainment"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15dp">
+
+                </Button>
+
+                <Button
+                    android:id="@+id/btn_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_margin="6dp"
+                    android:backgroundTint="#5B4DBE"
+                    android:text="General"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15dp">
+
+                </Button>
+
+                <Button
+                    android:id="@+id/btn_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_margin="6dp"
+                    android:backgroundTint="#5B4DBE"
+                    android:text="Health"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15dp">
+
+                </Button>
+
+                <Button
+                    android:id="@+id/btn_5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_margin="6dp"
+                    android:backgroundTint="#5B4DBE"
+                    android:text="Science"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15dp">
+
+                </Button>
+
+                <Button
+                    android:id="@+id/btn_6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_margin="6dp"
+                    android:backgroundTint="#5B4DBE"
+                    android:text="Sports"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15dp">
+
+                </Button>
+
+                <Button
+                    android:id="@+id/btn_7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_margin="6dp"
+                    android:backgroundTint="#5B4DBE"
+                    android:text="Technology"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15dp">
+
+                </Button>
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="14dp"
+            app:cardElevation="8dp">
+
+            <SearchView
+                android:id="@+id/search_view"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:focusable="false"
+                android:iconifiedByDefault="false"
+                app:defaultQueryHint="Search News...">
+
+            </SearchView>
+        </androidx.cardview.widget.CardView>
+
+        <com.huawei.hms.ads.banner.BannerView
+            android:id="@+id/hw_banner_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            hwads:adId="testw6vs28auh3"
+            hwads:bannerSize="BANNER_SIZE_360_57" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:paddingBottom="55dp">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>

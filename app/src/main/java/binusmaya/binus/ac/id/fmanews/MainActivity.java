@@ -1,5 +1,6 @@
 package binusmaya.binus.ac.id.fmanews;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -7,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -17,6 +20,7 @@ import java.util.List;
 import binusmaya.binus.ac.id.fmanews.Models.NewsApiResponse;
 import binusmaya.binus.ac.id.fmanews.Models.NewsHeadlines;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.huawei.hms.ads.HwAds;
 import com.huawei.hms.ads.banner.BannerView;
 import com.huawei.hms.ads.AdParam;
@@ -35,7 +39,30 @@ public class MainActivity extends AppCompatActivity implements SelectListener, V
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+
+        bottomNavigationView.setSelectedItemId(R.id.home);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch(menuItem.getItemId()){
+                    case R.id.profile:
+                        startActivity(new Intent(getApplicationContext()
+                                ,Profile.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                    case R.id.home:
+                        return true;
+                }
+                return false;
+            }
+        });
+
 
         // Initialize the HUAWEI Ads SDK.
         HwAds.init(this);
@@ -88,18 +115,19 @@ public class MainActivity extends AppCompatActivity implements SelectListener, V
         b7 = findViewById(R.id.btn_7);
         b7.setOnClickListener(this);
 
-        btnLogin = findViewById(R.id.btnLogin);
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, Login.class);
-                startActivity(intent);
-
-            }
-        });
+//        btnLogin = findViewById(R.id.btnLogin);
+//        btnLogin.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(MainActivity.this, Login.class);
+//                startActivity(intent);
+//
+//            }
+//        });
 
         RequestManager manager = new RequestManager(this);
         manager.getNewsHeadlines(listener, "general", null);
+
     }
 
     private final OnFetchDataListener<NewsApiResponse> listener = new OnFetchDataListener<NewsApiResponse>() {

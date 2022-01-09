@@ -1,13 +1,20 @@
 package binusmaya.binus.ac.id.fmanews;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.huawei.hmf.tasks.OnFailureListener;
 import com.huawei.hmf.tasks.OnSuccessListener;
 import com.huawei.hmf.tasks.Task;
@@ -19,7 +26,7 @@ import com.huawei.hms.support.account.result.AuthAccount;
 import com.huawei.hms.support.account.service.AccountAuthService;
 import com.huawei.hms.support.api.entity.common.CommonConstant;
 
-public class Login extends AppCompatActivity {
+public class Profile extends AppCompatActivity {
 
     // AccountAuthService provides a set of APIs, including silentSignIn, getSignInIntent, and signOut.
     private AccountAuthService mAuthService;
@@ -33,12 +40,40 @@ public class Login extends AppCompatActivity {
     // Define the log flag.
     private static final String TAG = "Account";
 
+    private TextView name, email, gender;
+    private ImageView img_profile;
+//    private Button HuaweiIdAuthButton, HuaweiIdSignOutButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getSupportActionBar().hide();
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_profile);
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+
+        bottomNavigationView.setSelectedItemId(R.id.profile);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch(menuItem.getItemId()){
+                    case R.id.profile:
+                        return true;
+                    case R.id.home:
+                        startActivity(new Intent(getApplicationContext()
+                                ,MainActivity.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                }
+                return false;
+            }
+        });
+
+        name = findViewById(R.id.name);
+        email = findViewById(R.id.email);
+        img_profile = findViewById(R.id.img_profile);
 
         findViewById(R.id.HuaweiIdAuthButton).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,6 +88,7 @@ public class Login extends AppCompatActivity {
                 signOut();
             }
         });
+
     }
 
     private void silentSignInByHwId() {
@@ -75,6 +111,10 @@ public class Login extends AppCompatActivity {
             public void onSuccess(AuthAccount authAccount) {
                 // The silent sign-in is successful. Process the returned AuthAccount object to obtain the HUAWEI ID information.
                 dealWithResultOfSignIn(authAccount);
+                findViewById(R.id.HuaweiIdSignOutButton).setVisibility(View.VISIBLE);
+                findViewById(R.id.HuaweiIdAuthButton).setVisibility(View.INVISIBLE);
+                findViewById(R.id.ll_profile).setVisibility(View.VISIBLE);
+                findViewById(R.id.profileBG).setVisibility(View.VISIBLE);
             }
         });
         task.addOnFailureListener(new OnFailureListener() {
@@ -104,6 +144,10 @@ public class Login extends AppCompatActivity {
         Log.i(TAG, "code:" + authAccount.getAvatarUri());
         Log.i(TAG, "code:" + authAccount.getDisplayName());
         Log.i(TAG, "code:" + authAccount.getEmail());
+        Log.i(TAG, "code:" + authAccount.getGender());
+        name.setText(authAccount.getDisplayName());
+        email.setText(authAccount.getEmail());
+        Glide.with(this).load(authAccount.getAvatarUri()).into(img_profile);
         // TODO: After obtaining the authorization code, your app needs to send it to the app server.
 
     }
@@ -119,6 +163,11 @@ public class Login extends AppCompatActivity {
                 AuthAccount authAccount = authAccountTask.getResult();
                 dealWithResultOfSignIn(authAccount);
                 Log.i(TAG, "onActivitResult of sigInInIntent, request code: " + REQUEST_CODE_SIGN_IN);
+
+//                findViewById(R.id.HuaweiIdSignOutButton).setVisibility(View.VISIBLE);
+//                findViewById(R.id.HuaweiIdAuthButton).setVisibility(View.GONE);
+
+
             } else {
                 // The sign-in fails. Find the cause from the status code. For more information, please refer to Error Codes.
                 Log.e(TAG, "sign in failed : " +((ApiException)authAccountTask.getException()).getStatusCode());
@@ -132,6 +181,10 @@ public class Login extends AppCompatActivity {
             @Override
             public void onSuccess(Void aVoid) {
                 Log.i(TAG, "signOut Success");
+                findViewById(R.id.HuaweiIdAuthButton).setVisibility(View.VISIBLE);
+                findViewById(R.id.HuaweiIdSignOutButton).setVisibility(View.INVISIBLE);
+                findViewById(R.id.ll_profile).setVisibility(View.INVISIBLE);
+                findViewById(R.id.profileBG).setVisibility(View.INVISIBLE);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
