@@ -45,6 +45,7 @@ public class Profile extends AppCompatActivity {
 
     private TextView name, email;
     private ImageView img_profile;
+    private static boolean signInUser = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,10 @@ public class Profile extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getSupportActionBar().hide();
         setContentView(R.layout.activity_profile);
+
+        if(signInUser){
+            silentSignInByHwId();
+        }
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
@@ -76,8 +81,6 @@ public class Profile extends AppCompatActivity {
         name = findViewById(R.id.name);
         email = findViewById(R.id.email);
         img_profile = findViewById(R.id.img_profile);
-
-        silentSignInByHwId();
 
         findViewById(R.id.HuaweiIdAuthButton).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,6 +117,7 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onSuccess(AuthAccount authAccount) {
                 // The silent sign-in is successful. Process the returned AuthAccount object to obtain the HUAWEI ID information.
+                signInUser = true;
                 dealWithResultOfSignIn(authAccount);
                 findViewById(R.id.HuaweiIdSignOutButton).setVisibility(View.VISIBLE);
                 findViewById(R.id.HuaweiIdAuthButton).setVisibility(View.INVISIBLE);
@@ -170,6 +174,7 @@ public class Profile extends AppCompatActivity {
             Task<AuthAccount> authAccountTask = AccountAuthManager.parseAuthResultFromIntent(data);
             if (authAccountTask.isSuccessful()) {
                 // The sign-in is successful, and the authAccount object that contains the HUAWEI ID information is obtained.
+                signInUser = true;
                 AuthAccount authAccount = authAccountTask.getResult();
                 dealWithResultOfSignIn(authAccount);
                 Log.i(TAG, "onActivitResult of sigInInIntent, request code: " + REQUEST_CODE_SIGN_IN);
@@ -189,6 +194,7 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onSuccess(Void aVoid) {
                 Log.i(TAG, "signOut Success");
+                signInUser = false;
                 findViewById(R.id.HuaweiIdAuthButton).setVisibility(View.VISIBLE);
                 findViewById(R.id.HuaweiIdSignOutButton).setVisibility(View.INVISIBLE);
                 findViewById(R.id.ll_profile).setVisibility(View.INVISIBLE);
