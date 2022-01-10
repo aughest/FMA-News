@@ -4,14 +4,17 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -40,9 +43,8 @@ public class Profile extends AppCompatActivity {
     // Define the log flag.
     private static final String TAG = "Account";
 
-    private TextView name, email, gender;
+    private TextView name, email;
     private ImageView img_profile;
-//    private Button HuaweiIdAuthButton, HuaweiIdSignOutButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +77,8 @@ public class Profile extends AppCompatActivity {
         email = findViewById(R.id.email);
         img_profile = findViewById(R.id.img_profile);
 
+        silentSignInByHwId();
+
         findViewById(R.id.HuaweiIdAuthButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,7 +96,7 @@ public class Profile extends AppCompatActivity {
     }
 
     private void silentSignInByHwId() {
-        //  1. Use AccountAuthParams to specify the user information to be obtained after user authorization, including the user ID (OpenID and UnionID), email address, and profile (nickname and picture).
+        // 1. Use AccountAuthParams to specify the user information to be obtained after user authorization, including the user ID (OpenID and UnionID), email address, and profile (nickname and picture).
         // 2. By default, DEFAULT_AUTH_REQUEST_PARAM specifies two items to be obtained, that is, the user ID and profile.
         // 3. If your app needs to obtain the user's email address, call setEmail().
         // 4. To support authorization code-based HUAWEI ID sign-in, use setAuthorizationCode(). All user information that your app is authorized to access can be obtained through the relevant API provided by the Account Kit server.
@@ -145,9 +149,15 @@ public class Profile extends AppCompatActivity {
         Log.i(TAG, "code:" + authAccount.getDisplayName());
         Log.i(TAG, "code:" + authAccount.getEmail());
         Log.i(TAG, "code:" + authAccount.getGender());
+
         name.setText(authAccount.getDisplayName());
         email.setText(authAccount.getEmail());
-        Glide.with(this).load(authAccount.getAvatarUri()).into(img_profile);
+        if(!authAccount.getAvatarUri().equals(Uri.EMPTY)){
+            Glide.with(this).load(authAccount.getAvatarUri()).into(img_profile);
+        } else {
+            findViewById(R.id.img_profile).setVisibility(View.VISIBLE);
+        }
+
         // TODO: After obtaining the authorization code, your app needs to send it to the app server.
 
     }
@@ -166,8 +176,6 @@ public class Profile extends AppCompatActivity {
 
 //                findViewById(R.id.HuaweiIdSignOutButton).setVisibility(View.VISIBLE);
 //                findViewById(R.id.HuaweiIdAuthButton).setVisibility(View.GONE);
-
-
             } else {
                 // The sign-in fails. Find the cause from the status code. For more information, please refer to Error Codes.
                 Log.e(TAG, "sign in failed : " +((ApiException)authAccountTask.getException()).getStatusCode());

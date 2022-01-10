@@ -40,7 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="-60dp"
                 android:src="@drawable/profile_bg"
-                android:visibility="invisible"/>
+                android:visibility="invisible" />
 
             <LinearLayout
                 android:id="@+id/ll_profile"
@@ -57,7 +57,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="30dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/not_available" />
+                    android:src="@drawable/not_available"/>
 
                 <TextView
                     android:id="@+id/name"

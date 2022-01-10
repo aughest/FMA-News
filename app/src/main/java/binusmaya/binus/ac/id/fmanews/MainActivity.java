@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements SelectListener, V
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+//                bottomNavigationView.setVisibility(View.INVISIBLE);
                 dialog.setTitle("Fetching news articles of " + query);
                 dialog.show();
                 RequestManager manager = new RequestManager(MainActivity.this);

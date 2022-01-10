@@ -20,8 +20,8 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/nav_background_curved"
         app:itemBackground="@drawable/nav_background_curved"
-        app:itemIconTint="@drawable/selector"
-        app:itemTextColor="@drawable/selector"
+        app:itemIconTint="@color/black"
+        app:itemTextColor="@color/black"
         app:menu="@menu/menu_navigation" />
 
     <!--    BOTTOM NAVBAR-->
