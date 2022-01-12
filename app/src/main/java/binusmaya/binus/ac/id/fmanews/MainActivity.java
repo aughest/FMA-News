@@ -63,7 +63,6 @@ public class MainActivity extends AppCompatActivity implements SelectListener, V
             }
         });
 
-
         // Initialize the HUAWEI Ads SDK.
         HwAds.init(this);
 
@@ -116,19 +115,8 @@ public class MainActivity extends AppCompatActivity implements SelectListener, V
         b7 = findViewById(R.id.btn_7);
         b7.setOnClickListener(this);
 
-//        btnLogin = findViewById(R.id.btnLogin);
-//        btnLogin.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(MainActivity.this, Login.class);
-//                startActivity(intent);
-//
-//            }
-//        });
-
         RequestManager manager = new RequestManager(this);
         manager.getNewsHeadlines(listener, "general", null);
-
     }
 
     private final OnFetchDataListener<NewsApiResponse> listener = new OnFetchDataListener<NewsApiResponse>() {

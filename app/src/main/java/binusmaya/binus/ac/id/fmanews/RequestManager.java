@@ -32,9 +32,7 @@ public class RequestManager {
                     if(!response.isSuccessful()){
                         Toast.makeText(context,"Error!!", Toast.LENGTH_SHORT).show();
                     }
-
                     listener.onFetchData(response.body().getArticles(), response.message());
-
                 }
 
                 @Override

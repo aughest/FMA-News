@@ -20,9 +20,6 @@
             android:name=".Profile"
             android:exported="true" />
         <activity
-            android:name=".Login"
-            android:exported="true" />
-        <activity
             android:name=".DetailActivity"
             android:exported="true" />
         <activity
