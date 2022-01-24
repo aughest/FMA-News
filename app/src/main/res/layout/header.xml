@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/back"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    android:gravity="bottom">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_marginBottom="35dp"
+        android:src="@drawable/fma_logo">
+
+    </ImageView>
+
+</LinearLayout>

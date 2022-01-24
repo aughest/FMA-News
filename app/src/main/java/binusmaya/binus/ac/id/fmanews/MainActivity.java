@@ -1,7 +1,11 @@
 package binusmaya.binus.ac.id.fmanews;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,18 +19,20 @@ import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+
 import java.util.List;
 
 import binusmaya.binus.ac.id.fmanews.Models.NewsApiResponse;
 import binusmaya.binus.ac.id.fmanews.Models.NewsHeadlines;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 import com.huawei.hms.ads.HwAds;
 import com.huawei.hms.ads.banner.BannerView;
 import com.huawei.hms.ads.AdParam;
 import com.huawei.hms.ads.BannerAdSize;
 
-public class MainActivity extends AppCompatActivity implements SelectListener, View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements SelectListener, View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
     RecyclerView recyclerView;
     CustomAdapter adapter;
@@ -34,34 +40,29 @@ public class MainActivity extends AppCompatActivity implements SelectListener, V
     Button b1,b2,b3,b4,b5,b6,b7, btnLogin;
     SearchView searchView;
 
-    private BannerView bannerView;
+    //Side Navigation Drawer Menu
+    DrawerLayout drawerLayout;
+    NavigationView navigationView;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+        toolbar = findViewById(R.id.toolbar);
 
-        bottomNavigationView.setSelectedItemId(R.id.home);
+//        setSupportActionBar(toolbar);
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch(menuItem.getItemId()){
-                    case R.id.profile:
-                        startActivity(new Intent(getApplicationContext()
-                                ,Profile.class));
-                        overridePendingTransition(0,0);
-                        return true;
-                    case R.id.home:
-                        return true;
-                }
-                return false;
-            }
-        });
+        navigationView.bringToFront();
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+        navigationView.setNavigationItemSelectedListener(this);
+
+        navigationView.setCheckedItem(R.id.nav_home);
 
         // Initialize the HUAWEI Ads SDK.
         HwAds.init(this);
@@ -82,7 +83,6 @@ public class MainActivity extends AppCompatActivity implements SelectListener, V
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-//                bottomNavigationView.setVisibility(View.INVISIBLE);
                 dialog.setTitle("Fetching news articles of " + query);
                 dialog.show();
                 RequestManager manager = new RequestManager(MainActivity.this);
@@ -100,30 +100,24 @@ public class MainActivity extends AppCompatActivity implements SelectListener, V
         dialog.setTitle("Fetch news articles..");
         dialog.show();
 
-        b1 = findViewById(R.id.btn_1);
-        b1.setOnClickListener(this);
-        b2 = findViewById(R.id.btn_2);
-        b2.setOnClickListener(this);
-        b3 = findViewById(R.id.btn_3);
-        b3.setOnClickListener(this);
-        b4 = findViewById(R.id.btn_4);
-        b4.setOnClickListener(this);
-        b5 = findViewById(R.id.btn_5);
-        b5.setOnClickListener(this);
-        b6 = findViewById(R.id.btn_6);
-        b6.setOnClickListener(this);
-        b7 = findViewById(R.id.btn_7);
-        b7.setOnClickListener(this);
-
         RequestManager manager = new RequestManager(this);
         manager.getNewsHeadlines(listener, "general", null);
+    }
+
+    @Override
+    public void onBackPressed(){
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else{
+            super.onBackPressed();
+        }
     }
 
     private final OnFetchDataListener<NewsApiResponse> listener = new OnFetchDataListener<NewsApiResponse>() {
         @Override
         public void onFetchData(List<NewsHeadlines> list, String message) {
             if (list.isEmpty()){
-                Toast.makeText(MainActivity.this,"No data found", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this,"News no found", Toast.LENGTH_SHORT).show();
             }else{
                 showNews(list);
                 dialog.dismiss();
@@ -158,5 +152,63 @@ public class MainActivity extends AppCompatActivity implements SelectListener, V
         dialog.show();
         RequestManager manager = new RequestManager(this);
         manager.getNewsHeadlines(listener, category, null);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+        Intent intent;
+        RequestManager manager = new RequestManager(this);;
+
+        switch (item.getItemId()){
+            case R.id.nav_home:
+                intent = new Intent(MainActivity.this, MainActivity.class);
+                startActivity(intent);
+                overridePendingTransition(0,0);
+                break;
+            case R.id.nav_profile:
+                intent = new Intent(MainActivity.this, Profile.class);
+                startActivity(intent);
+                overridePendingTransition(0,0);
+                break;
+            case R.id.nav_business:
+                dialog.setTitle("Searching the business news");
+                dialog.show();
+                manager.getNewsHeadlines(listener, "business", null);
+                break;
+            case R.id.nav_entertainment:
+                dialog.setTitle("Searching the entertainment news");
+                dialog.show();
+                manager.getNewsHeadlines(listener, "entertainment", null);
+                break;
+            case R.id.nav_general:
+                dialog.setTitle("Searching the general news");
+                dialog.show();
+                manager.getNewsHeadlines(listener, "general", null);
+                break;
+            case R.id.nav_health:
+                dialog.setTitle("Searching the health news");
+                dialog.show();
+                manager.getNewsHeadlines(listener, "health", null);
+                break;
+            case R.id.nav_science:
+                dialog.setTitle("Searching the science news");
+                dialog.show();
+                manager.getNewsHeadlines(listener, "science", null);
+                break;
+            case R.id.nav_sports:
+                dialog.setTitle("Searching the sport news");
+                dialog.show();
+                manager.getNewsHeadlines(listener, "sports", null);
+                break;
+            case R.id.nav_technology:
+                dialog.setTitle("Searching the technology news");
+                dialog.show();
+                manager.getNewsHeadlines(listener, "technology", null);
+                break;
+        }
+
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
     }
 }

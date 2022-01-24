@@ -20,15 +20,25 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/nav_background_curved"
         app:itemBackground="@drawable/nav_background_curved"
-        app:itemIconTint="@color/black"
-        app:itemTextColor="@color/black"
+        app:itemIconTint="@drawable/selector"
+        app:itemTextColor="@drawable/selector"
         app:menu="@menu/menu_navigation" />
 
     <!--    BOTTOM NAVBAR-->
-    <LinearLayout
+
+    <WebView
+        android:id="@+id/webview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:visibility="gone"
+        />
+
+    <LinearLayout
+        android:id="@+id/lldetail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="visible">
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -38,51 +48,51 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp">
 
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_margin="6dp"
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_margin="6dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/text_detail_title"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:textSize="26dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
-                        <TextView
-                            android:id="@+id/text_detail_title"
-                            android:textColor="@color/black"
-                            android:textStyle="bold"
-                            android:textSize="26dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
 
-                        </TextView>
-                        <ImageView
-                            android:id="@+id/img_detail_news"
-                            android:scaleType="fitXY"
-                            android:src="@drawable/not_available"
-                            android:layout_marginTop="8dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="250dp">
+                    </TextView>
+                    <ImageView
+                        android:id="@+id/img_detail_news"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/not_available"
+                        android:layout_marginTop="8dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp">
 
-                        </ImageView>
-                        <TextView
-                            android:id="@+id/text_detail_author"
-                            android:textColor="#5B4DBE"
-                            android:textSize="16sp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp">
+                    </ImageView>
+                    <TextView
+                        android:id="@+id/text_detail_author"
+                        android:textColor="#5B4DBE"
+                        android:textSize="16sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp">
 
-                        </TextView>
-                        <TextView
-                            android:id="@+id/text_detail_time"
-                            android:textColor="@color/black"
-                            android:textSize="16sp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                    </TextView>
+                    <TextView
+                        android:id="@+id/text_detail_time"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-                        </TextView>
-                    </LinearLayout>
+                    </TextView>
+                </LinearLayout>
 
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_marginLeft="6dp"
@@ -103,11 +113,26 @@
                         android:textColor="@color/black"
                         android:layout_marginTop="8dp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingBottom="55dp">
+                        android:layout_height="wrap_content">
                     </TextView>
 
                 </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="3dp"
+                    android:paddingBottom="72dp">
+
+                    <Button
+                        android:id="@+id/btnMore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:text="Read More >>"
+                        android:textAllCaps="false" />
+
+                </RelativeLayout>
             </LinearLayout>
         </ScrollView>
     </LinearLayout>

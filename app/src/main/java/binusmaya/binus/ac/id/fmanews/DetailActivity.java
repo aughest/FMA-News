@@ -6,8 +6,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -19,12 +24,13 @@ public class DetailActivity extends AppCompatActivity {
     NewsHeadlines headlines;
     TextView txt_title, txt_author, txt_time, txt_detail, txt_content;
     ImageView img_news;
+    Button btnMore;
+    LinearLayout lldetail;
+    private WebView myWebView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getSupportActionBar().hide();
         setContentView(R.layout.activity_detail);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -36,8 +42,7 @@ public class DetailActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch(menuItem.getItemId()){
                     case R.id.profile:
-                        startActivity(new Intent(getApplicationContext()
-                                ,Profile.class));
+                        startActivity(new Intent(getApplicationContext(), Profile.class));
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.home:
@@ -57,6 +62,8 @@ public class DetailActivity extends AppCompatActivity {
         txt_content = findViewById(R.id.text_detail_content);
         img_news = findViewById(R.id.img_detail_news);
 
+        lldetail = findViewById(R.id.lldetail);
+
         headlines = (NewsHeadlines) getIntent().getSerializableExtra("data");
 
         txt_title.setText(headlines.getTitle());
@@ -65,5 +72,18 @@ public class DetailActivity extends AppCompatActivity {
         txt_detail.setText(headlines.getDescription());
         txt_content.setText(headlines.getContent());
         Picasso.get().load(headlines.getUrlToImage()).into(img_news);
+
+        btnMore = findViewById(R.id.btnMore);
+        btnMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lldetail.setVisibility(View.GONE);
+
+                myWebView = (WebView) findViewById(R.id.webview);
+                myWebView.setVisibility(View.VISIBLE);
+                myWebView.setWebViewClient(new WebViewClient());
+                myWebView.loadUrl(headlines.getUrl());
+            }
+        });
     }
 }
