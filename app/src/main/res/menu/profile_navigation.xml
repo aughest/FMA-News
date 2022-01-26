@@ -11,8 +11,4 @@
         android:title="Profile"
         android:icon="@drawable/ic_profile"/>
 
-    <item
-        android:id="@+id/share"
-        android:title="Share"
-        android:icon="@drawable/ic_share"/>
 </menu>

@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/fma_news_logo"
         android:supportsRtl="true"
-        android:theme="@style/Theme.FMANews"
+        android:theme="@style/Theme.Light"
         android:usesCleartextTraffic="true" >
         <activity
             android:name=".ProfileActivity"

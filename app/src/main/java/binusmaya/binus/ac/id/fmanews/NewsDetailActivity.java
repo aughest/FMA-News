@@ -2,6 +2,7 @@ package binusmaya.binus.ac.id.fmanews;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,6 +30,11 @@ public class NewsDetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
+            setTheme(R.style.Theme_DarK);
+        }else{
+            setTheme(R.style.Theme_Light);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
@@ -49,6 +55,12 @@ public class NewsDetailActivity extends AppCompatActivity {
                                 ,MainActivity.class));
                         overridePendingTransition(0,0);
                         return true;
+                    case R.id.share:
+                        Intent intent = new Intent(Intent.ACTION_SEND);
+                        intent.setType("text/plain");
+                        String intentBody = headlines.getTitle() + ": " + headlines.getUrl();
+                        intent.putExtra(intent.EXTRA_TEXT, intentBody);
+                        startActivity(intent.createChooser(intent, "Share from FMA News"));
                 }
                 return false;
             }

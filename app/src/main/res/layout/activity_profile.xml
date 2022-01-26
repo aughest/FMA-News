@@ -21,7 +21,7 @@
         app:itemBackground="@drawable/nav_background_curved"
         app:itemIconTint="@drawable/selector"
         app:itemTextColor="@drawable/selector"
-        app:menu="@menu/menu_navigation" />
+        app:menu="@menu/profile_navigation" />
 
     <!--    BOTTOM NAVBAR-->
 

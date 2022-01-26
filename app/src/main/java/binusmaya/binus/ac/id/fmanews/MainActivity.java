@@ -3,6 +3,8 @@ package binusmaya.binus.ac.id.fmanews;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -15,7 +17,10 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -34,7 +39,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     RecyclerView recyclerView;
     ProgressDialog dialog;
-    Button b1,b2,b3,b4,b5,b6,b7, btnLogin;
     SearchView searchView;
 
     //Side Navigation Drawer Menu
@@ -42,10 +46,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     NavigationView navigationView;
     Toolbar toolbar;
 
+    SwitchCompat switchCompat;
+    ImageView img_logo;
+    TextView txtTheme;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
+            setTheme(R.style.Theme_DarK);
+        }else{
+            setTheme(R.style.Theme_Light);
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        switchCompat = findViewById(R.id.bt_switch);
+        img_logo = findViewById(R.id.img_logo);
+        txtTheme = findViewById(R.id.txtTheme);
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
@@ -92,11 +110,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
 
         dialog = new ProgressDialog(this);
-        dialog.setTitle("Search news");
+        dialog.setTitle("Prepare the news");
         dialog.show();
 
         RequestManager manager = new RequestManager(this);
         manager.getNewsHeadlines(listener, "general", null);
+
+        switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if(isChecked){
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    img_logo.setImageResource(R.drawable.fma_logo_white);
+                    txtTheme.setText("Dark");
+                }else{
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                }
+            }
+        });
+
+        if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
+            switchCompat.setChecked(true);
+            img_logo.setImageResource(R.drawable.fma_logo_white);
+            txtTheme.setText("Dark");
+        }
     }
 
     @Override

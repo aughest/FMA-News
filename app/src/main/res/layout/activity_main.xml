@@ -7,6 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:background="?attr/background_color"
     tools:context=".MainActivity"
     tools:openDrawer="start">
 
@@ -16,7 +17,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/header"
-        app:itemTextColor="#5A4CBC"
+        app:itemTextColor="?attr/text_color"
         app:menu="@menu/home" />
 
     <LinearLayout
@@ -32,13 +33,13 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
+                android:background="?attr/background_color"
                 android:minHeight="?attr/actionBarSize"
                 android:theme="?attr/actionBarTheme"
                 hwads:navigationIcon="@drawable/ic_menu">
 
                 <ImageView
-                    android:id="@+id/imageView"
+                    android:id="@+id/img_logo"
                     android:layout_width="60dp"
                     android:layout_height="30dp"
                     android:src="@drawable/fma_logo"></ImageView>
@@ -57,8 +58,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginTop="10dp"
                 app:cardElevation="8dp">
 
                 <SearchView
@@ -80,11 +80,43 @@
                 hwads:adId="testw6vs28auh3"
                 hwads:bannerSize="BANNER_SIZE_360_57" />
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:paddingHorizontal="8dp">
+
+                <RelativeLayout
+                    android:id="@+id/rlTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/txtTheme"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:text="Light"
+                        android:textColor="?attr/text_color"
+                        android:textSize="20sp" />
+
+                </RelativeLayout>
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/bt_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/rlTheme" />
+            </RelativeLayout>
+
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_main"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp">
+                android:layout_marginBottom="8dp"
+                android:layout_marginHorizontal="5dp">
 
             </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>

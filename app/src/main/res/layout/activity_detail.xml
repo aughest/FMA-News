@@ -7,7 +7,6 @@
     android:orientation="vertical"
     tools:context=".NewsDetailActivity">
 
-
     <!--    BOTTOM NAVBAR-->
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -55,7 +54,7 @@
                     android:layout_height="wrap_content">
                     <TextView
                         android:id="@+id/text_detail_title"
-                        android:textColor="@color/black"
+                        android:textColor="?attr/text_color"
                         android:textStyle="bold"
                         android:textSize="26dp"
                         android:layout_width="match_parent"
@@ -73,7 +72,7 @@
                     </ImageView>
                     <TextView
                         android:id="@+id/text_detail_author"
-                        android:textColor="#5B4DBE"
+                        android:textColor="?attr/text_color_purple"
                         android:textSize="16sp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -82,14 +81,13 @@
                     </TextView>
                     <TextView
                         android:id="@+id/text_detail_time"
-                        android:textColor="@color/black"
+                        android:textColor="?attr/text_color"
                         android:textSize="16sp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
                     </TextView>
                 </LinearLayout>
-
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -101,7 +99,7 @@
                     <TextView
                         android:id="@+id/text_detail_detail"
                         android:textSize="22sp"
-                        android:textColor="@color/black"
+                        android:textColor="?attr/text_color"
                         android:layout_marginTop="8dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
@@ -110,7 +108,7 @@
                     <TextView
                         android:id="@+id/text_detail_content"
                         android:textSize="20sp"
-                        android:textColor="@color/black"
+                        android:textColor="?attr/text_color"
                         android:layout_marginTop="8dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
