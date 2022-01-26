@@ -10,17 +10,17 @@
     <application
         android:name=".AdSampleApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/fma_news_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/fma_news_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.FMANews"
         android:usesCleartextTraffic="true" >
         <activity
-            android:name=".Profile"
+            android:name=".ProfileActivity"
             android:exported="true" />
         <activity
-            android:name=".DetailActivity"
+            android:name=".NewsDetailActivity"
             android:exported="true" />
         <activity
             android:name=".MainActivity"

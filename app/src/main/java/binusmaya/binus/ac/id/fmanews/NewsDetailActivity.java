@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -18,10 +17,10 @@ import android.widget.TextView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.squareup.picasso.Picasso;
 
-import binusmaya.binus.ac.id.fmanews.Models.NewsHeadlines;
+import binusmaya.binus.ac.id.fmanews.Models.Article;
 
-public class DetailActivity extends AppCompatActivity {
-    NewsHeadlines headlines;
+public class NewsDetailActivity extends AppCompatActivity {
+    Article headlines;
     TextView txt_title, txt_author, txt_time, txt_detail, txt_content;
     ImageView img_news;
     Button btnMore;
@@ -42,7 +41,7 @@ public class DetailActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch(menuItem.getItemId()){
                     case R.id.profile:
-                        startActivity(new Intent(getApplicationContext(), Profile.class));
+                        startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                         overridePendingTransition(0,0);
                         return true;
                     case R.id.home:
@@ -64,7 +63,7 @@ public class DetailActivity extends AppCompatActivity {
 
         lldetail = findViewById(R.id.lldetail);
 
-        headlines = (NewsHeadlines) getIntent().getSerializableExtra("data");
+        headlines = (Article) getIntent().getSerializableExtra("data");
 
         txt_title.setText(headlines.getTitle());
         txt_author.setText(headlines.getAuthor());

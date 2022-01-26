@@ -3,11 +3,11 @@ package binusmaya.binus.ac.id.fmanews.Models;
 import java.io.Serializable;
 import java.util.List;
 
-public class NewsApiResponse implements Serializable {
+public class NewsList implements Serializable {
 
     String status;
     int totalResult;
-    List<NewsHeadlines> articles;
+    List<Article> articles;
 
     public String getStatus() {
         return status;
@@ -25,11 +25,11 @@ public class NewsApiResponse implements Serializable {
         this.totalResult = totalResult;
     }
 
-    public List<NewsHeadlines> getArticles() {
+    public List<Article> getArticles() {
         return articles;
     }
 
-    public void setArticles(List<NewsHeadlines> articles) {
+    public void setArticles(List<Article> articles) {
         this.articles = articles;
     }
 }

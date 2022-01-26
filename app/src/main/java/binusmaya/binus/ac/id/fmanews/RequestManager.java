@@ -3,7 +3,7 @@ package binusmaya.binus.ac.id.fmanews;
 import android.content.Context;
 import android.widget.Toast;
 
-import binusmaya.binus.ac.id.fmanews.Models.NewsApiResponse;
+import binusmaya.binus.ac.id.fmanews.Models.NewsList;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -23,12 +23,12 @@ public class RequestManager {
     public void getNewsHeadlines(OnFetchDataListener listener, String category, String query)
     {
         CallNewsApi callNewsApi = retrofit.create(CallNewsApi.class);
-        Call<NewsApiResponse> call = callNewsApi.callHeadlines("id",category, query, context.getString(R.string.api_key));
+        Call<NewsList> call = callNewsApi.callHeadlines("us",category, query, context.getString(R.string.api_key));
 
         try{
-            call.enqueue(new Callback<NewsApiResponse>() {
+            call.enqueue(new Callback<NewsList>() {
                 @Override
-                public void onResponse(Call<NewsApiResponse> call, Response<NewsApiResponse> response) {
+                public void onResponse(Call<NewsList> call, Response<NewsList> response) {
                     if(!response.isSuccessful()){
                         Toast.makeText(context,"Error!!", Toast.LENGTH_SHORT).show();
                     }
@@ -36,7 +36,7 @@ public class RequestManager {
                 }
 
                 @Override
-                public void onFailure(Call<NewsApiResponse> call, Throwable t) {
+                public void onFailure(Call<NewsList> call, Throwable t) {
                     listener.onError("Request Failed!");
                 }
             });
@@ -51,7 +51,7 @@ public class RequestManager {
 
     public interface CallNewsApi {
         @GET("top-headlines")
-        Call<NewsApiResponse> callHeadlines(
+        Call<NewsList> callHeadlines(
                 @Query("country") String country,
                 @Query("category") String category,
                 @Query("q") String query,

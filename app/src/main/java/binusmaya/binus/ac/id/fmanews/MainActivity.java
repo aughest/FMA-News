@@ -14,7 +14,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -22,20 +21,18 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import binusmaya.binus.ac.id.fmanews.Models.NewsApiResponse;
-import binusmaya.binus.ac.id.fmanews.Models.NewsHeadlines;
+import binusmaya.binus.ac.id.fmanews.Models.NewsList;
+import binusmaya.binus.ac.id.fmanews.Models.Article;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.huawei.hms.ads.HwAds;
 import com.huawei.hms.ads.banner.BannerView;
 import com.huawei.hms.ads.AdParam;
 import com.huawei.hms.ads.BannerAdSize;
 
-public class MainActivity extends AppCompatActivity implements SelectListener, View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
     RecyclerView recyclerView;
-    CustomAdapter adapter;
     ProgressDialog dialog;
     Button b1,b2,b3,b4,b5,b6,b7, btnLogin;
     SearchView searchView;
@@ -53,8 +50,6 @@ public class MainActivity extends AppCompatActivity implements SelectListener, V
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
-
-//        setSupportActionBar(toolbar);
 
         navigationView.bringToFront();
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -83,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements SelectListener, V
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                dialog.setTitle("Fetching news articles of " + query);
+                dialog.setTitle("Searching news of " + query);
                 dialog.show();
                 RequestManager manager = new RequestManager(MainActivity.this);
                 manager.getNewsHeadlines(listener, "general", query);
@@ -97,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements SelectListener, V
         });
 
         dialog = new ProgressDialog(this);
-        dialog.setTitle("Fetch news articles..");
+        dialog.setTitle("Search news");
         dialog.show();
 
         RequestManager manager = new RequestManager(this);
@@ -113,9 +108,9 @@ public class MainActivity extends AppCompatActivity implements SelectListener, V
         }
     }
 
-    private final OnFetchDataListener<NewsApiResponse> listener = new OnFetchDataListener<NewsApiResponse>() {
+    private final OnFetchDataListener<NewsList> listener = new OnFetchDataListener<NewsList>() {
         @Override
-        public void onFetchData(List<NewsHeadlines> list, String message) {
+        public void onFetchData(List<Article> list, String message) {
             if (list.isEmpty()){
                 Toast.makeText(MainActivity.this,"News no found", Toast.LENGTH_SHORT).show();
             }else{
@@ -130,25 +125,19 @@ public class MainActivity extends AppCompatActivity implements SelectListener, V
         }
     };
 
-    private void showNews(List<NewsHeadlines> list) {
+    private void showNews(List<Article> list) {
         recyclerView = findViewById(R.id.recycler_main);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
-        adapter = new CustomAdapter(this, list, this);
+        NewsAdapter adapter = new NewsAdapter(this, list);
         recyclerView.setAdapter(adapter);
-    }
-
-    @Override
-    public void OnNewsClicked(NewsHeadlines headlines) {
-        startActivity(new Intent(MainActivity.this, DetailActivity.class)
-                .putExtra("data",headlines));
     }
 
     @Override
     public void onClick(View view) {
         Button button = (Button) view;
         String category = button.getText().toString();
-        dialog.setTitle("Fetching news articles of " + category);
+        dialog.setTitle("Searching news of " + category);
         dialog.show();
         RequestManager manager = new RequestManager(this);
         manager.getNewsHeadlines(listener, category, null);
@@ -167,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements SelectListener, V
                 overridePendingTransition(0,0);
                 break;
             case R.id.nav_profile:
-                intent = new Intent(MainActivity.this, Profile.class);
+                intent = new Intent(MainActivity.this, ProfileActivity.class);
                 startActivity(intent);
                 overridePendingTransition(0,0);
                 break;

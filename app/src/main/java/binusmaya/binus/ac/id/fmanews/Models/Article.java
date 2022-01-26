@@ -2,7 +2,7 @@ package binusmaya.binus.ac.id.fmanews.Models;
 
 import java.io.Serializable;
 
-public class NewsHeadlines implements Serializable {
+public class Article implements Serializable {
 
     Source source = null;
     String author = "";
